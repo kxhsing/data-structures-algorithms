@@ -9,7 +9,7 @@ class Stack(object):
         self.stack.pop()
 
     def peek(self, data):
-        return self.stack[0]
+        return self.stack[-1]
 
 
 class Queue(object):
@@ -20,6 +20,7 @@ class Queue(object):
     def transfer(self):
         """If queue is empty, check to see if transfer list has items. If so
         continue transferring to queue until empty"""
+        
         if len(self.queue) == 0:
             if self.transfer_list:
                 while len(self.transfer_list) > 0:
