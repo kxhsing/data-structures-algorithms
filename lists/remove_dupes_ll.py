@@ -22,3 +22,23 @@ def remove_duplicates_sorted(head):
             current = current.next
 
 
+def remove_k_from_ll(head, k):
+
+    if l is None:
+        return
+    
+    while l and l.value == k:
+        l=l.next
+        if l is None:
+            return
+    
+    current = l
+    while current.next:
+        if current.next.value == k:
+            current.next = current.next.next
+            if current.next is None:
+                return l
+        else:
+            current = current.next
+    return l
+
