@@ -60,14 +60,66 @@ def FriendGraph(object):
 
         return helper(self.people[name1], name2, set())
 
-    def find_path(self, person1, person2):
-
+    def find_path(self, person1, person2, path=[]):
         """DFS search for path between two people"""
-        pass
+
+        path = path + [person1]
+
+        if person1 == person2:
+            return path
+
+        if not self.people[person1]:
+            return None
+
+        for friend in self.people[person1]:
+            if friend not in path:
+                newpath = find_path(friend, person2, path)
+                if newpath:
+                    return newpath
+
+        return None
+    
+    def find_all_paths(self, person1, person2, path=[]):
+        """Find all paths that will lead person1 to person2"""
+
+        path = path + [person1]
+        if person1 == person2:
+            return [path]
+
+        if not self.people[person1]:
+            return []
+
+        paths = []
+
+        for friend in self.people[person1]:
+            newpaths = find_all_paths(friend, person2, path)
+            for newpath in newpaths:
+                paths.append(newpath)
+
+        return paths
+        
 
     def find_shortest_path(self, person1, person2):
         """BFS search for shortest path between two people"""
-        pass
+
+        path = path + [person1]
+        if person1 == person2:
+            return [path]
+
+        if not self.people[person1]:
+            return None
+
+        shortest = None
+
+        for friend in self.people[person1]:
+            if friend not in path:
+                newpath = find_shortest_path(friend, person2, path)
+                if newpath:
+                    if not shortest or len(newpath) < len(shortest):
+                        shortest = newpath
+
+        return shortest
+        
 
 
 
