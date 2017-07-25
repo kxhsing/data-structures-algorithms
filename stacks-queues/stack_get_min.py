@@ -4,7 +4,6 @@ class MinStack(object):
         """
         initialize your data structure here.
         """
-        # self.store_min = {}
         self.stack = []
         
 
