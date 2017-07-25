@@ -29,6 +29,8 @@ class FriendGraph(object):
             self.add_person(person)
 
     def get_people(self):
+        """Get all people in the graph"""
+
         if self.people:
             return self.people.keys()
 
@@ -68,60 +70,61 @@ class FriendGraph(object):
 
         return helper(self.people[name1], name2, set())
 
-    def find_path(self, person1, person2, path=[]):
+    def find_path(self, name1, name2, path=[]):
         """DFS search for path between two people"""
 
-        path = path + [person1]
+        path = path + [name1]
 
-        if person1 == person2:
+        if name1 == name2:
             return path
 
-        if person1 not in self.people:
+        if name1 not in self.people:
             return None
 
-        for friend in self.people[person1].adjacent:
-            if friend not in path:
-                newpath = self.find_path(friend, person2, path)
+        for friend in self.people[name1].adjacent:
+            if friend.name not in path:
+                newpath = self.find_path(friend.name, name2, path)
                 if newpath:
                     return newpath
 
         return None
     
-    def find_all_paths(self, person1, person2, path=[]):
+    def find_all_paths(self, name1, name2, path=[]):
         """Find all paths that will lead person1 to person2"""
 
-        path = path + [person1]
-        if person1 == person2:
+        path = path + [name1]
+        if name1 == name2:
             return [path]
 
-        if person1 not in self.people:
+        if name1 not in self.people:
             return []
 
         paths = []
 
-        for friend in self.people[person1].adjacent:
-            newpaths = self.find_all_paths(friend, person2, path)
-            for newpath in newpaths:
-                paths.append(newpath)
+        for friend in self.people[name1].adjacent:
+            if friend.name not in path:
+                newpaths = self.find_all_paths(friend.name, name2, path)
+                for newpath in newpaths:
+                    paths.append(newpath)
 
         return paths
         
 
-    def find_shortest_path(self, person1, person2):
+    def find_shortest_path(self, name1, name2, path=[]):
         """BFS search for shortest path between two people"""
 
-        path = path + [person1]
-        if person1 == person2:
+        path = path + [name1]
+        if name1 == name2:
             return [path]
 
-        if person1 not in self.people:
+        if name1 not in self.people:
             return None
 
         shortest = None
 
-        for friend in self.people[person1].adjacent:
-            if friend not in path:
-                newpath = self.find_shortest_path(friend, person2, path)
+        for friend in self.people[name1].adjacent:
+            if friend.name not in path:
+                newpath = self.find_shortest_path(friend.name, name2, path)
                 if newpath:
                     if not shortest or len(newpath) < len(shortest):
                         shortest = newpath
@@ -132,16 +135,18 @@ class FriendGraph(object):
 
 friendship = FriendGraph()
 friendship.add_people(["apple", "berry", "cherry", "elderberry", "onion"])
-friendship.make_friends("apple", ["berry"])
+friendship.make_friends("apple", ["berry", "onion"])
 friendship.add_person("asparagus")
 friendship.add_people(["celery", "parsnip", "avocado"])
 friendship.add_person("tomato")
-friendship.make_friends("tomato", ["avocado"])
+friendship.make_friends("tomato", ["avocado", "onion", "apple"])
 friendship.make_friends("avocado", ["onion"])
 friendship.make_friends("onion", ["berry", "parsnip"])
 
-# friendship.find_all_paths("tomato", "onion")
-friendship.find_path("tomato", "onion")
+print friendship.find_path("tomato", "onion")
+print friendship.find_all_paths("tomato", "onion")
+print friendship.find_shortest_path("tomato", "onion")
+
 
 
         
