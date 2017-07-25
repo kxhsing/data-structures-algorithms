@@ -113,23 +113,35 @@ class FriendGraph(object):
     def find_shortest_path(self, name1, name2, path=[]):
         """BFS search for shortest path between two people"""
 
-        path = path + [name1]
-        if name1 == name2:
-            return [path]
+        all_paths = self.find_all_paths("tomato", "onion")
+        min_path = all_paths[0]
+        min_path_len = len(all_paths[0])
 
-        if name1 not in self.people:
-            return None
+        for path in all_paths[1:]:
+            if len(path) < min_path_len:
+                min_path = path
+                min_path_len = len(min_path)
 
-        shortest = None
+        return min_path
 
-        for friend in self.people[name1].adjacent:
-            if friend.name not in path:
-                newpath = self.find_shortest_path(friend.name, name2, path)
-                if newpath:
-                    if not shortest or len(newpath) < len(shortest):
-                        shortest = newpath
 
-        return shortest
+        # path = path + [name1]
+        # if name1 == name2:
+        #     return [path]
+
+        # if name1 not in self.people:
+        #     return None
+
+        # shortest = None
+
+        # for friend in self.people[name1].adjacent:
+        #     if friend.name not in path:
+        #         newpath = self.find_shortest_path(friend.name, name2, path)
+        #         if newpath:
+        #             if not shortest or len(newpath) < len(shortest):
+        #                 shortest = newpath
+
+        # return shortest
 
 
 
