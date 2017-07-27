@@ -23,6 +23,7 @@ def remove_duplicates_sorted(head):
 
 
 def remove_k_from_ll(head, k):
+    """Remove all k in linked list. There might be duplicates"""
 
     if l is None:
         return

@@ -52,6 +52,18 @@ def reverse_linked_list(head):
     return out_head
 
 
+def reverseList(self, head):
+    """
+    :type head: ListNode
+    :rtype: ListNode
+    """
+    prev = None
+    while head:
+        curr = head
+        head = head.next
+        curr.next = prev
+        prev = curr
+    return prev
 
 
 if __name__ == '__main__':
