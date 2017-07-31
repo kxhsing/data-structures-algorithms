@@ -48,18 +48,30 @@ class DoublyLinkedList(object):
         """Insert new node with data before node"""
 
         new_node = Node(data)
-        node.previous.next = new_node
-        node.previous = new_node
         new_node.next = node
+
+        if not node.previous: #if node is head
+            node.previous = new_node
+            self.head = new_node
+
+        else:
+            node.previous.next = new_node
+            node.previous = new_node
 
     def insert_after(self, node, data):
         """Insert new node with data after node"""
 
         new_node = Node(data)
-        new_node.next = node.next
         new_node.previous = node
-        node.next.previous = new_node
-        node.next = new_node
+
+        if not node.next: #if node is tail
+            node.next = new_node
+            new_node.next = None
+
+        else:
+            new_node.next = node.next
+            node.next.previous = new_node
+            node.next = new_node
 
     def remove(self, node):
         """Remove node and connect previous and next nodes together"""
@@ -79,8 +91,7 @@ class DoublyLinkedList(object):
         elif node.previous: #we're removing current last node
             self.tail = node.previous
             self.tail.next = None
-            # self.tail.previous = second_to_last
-            # second_to_last = self.tail.previous.previous
+
 
 
 
