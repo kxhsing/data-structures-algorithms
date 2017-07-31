@@ -44,6 +44,22 @@ class DoublyLinkedList(object):
         else:
             return "No node to pop"
 
+    def insert_before(self, node, data):
+        """Insert new node with data before node"""
+
+        new_node = Node(data)
+        node.previous.next = new_node
+        node.previous = new_node
+        new_node.next = node
+
+    def insert_after(self, node, data):
+        """Insert new node with data after node"""
+
+        new_node = Node(data)
+        new_node.next = node.next
+        new_node.previous = node
+        node.next.previous = new_node
+        node.next = new_node
 
     def remove(self, node):
         """Remove node and connect previous and next nodes together"""
@@ -65,6 +81,8 @@ class DoublyLinkedList(object):
             self.tail.next = None
             # self.tail.previous = second_to_last
             # second_to_last = self.tail.previous.previous
+
+
 
 
 # Creating DLL: B -> C
