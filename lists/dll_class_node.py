@@ -76,7 +76,7 @@ class DoublyLinkedList(object):
     def remove(self, node):
         """Remove node and connect previous and next nodes together"""
 
-        if node.next and node.previous:
+        if node.next and node.previous: #we're removing node that is not head or tail
             next_node = node.next
             previous_node = node.previous
 
@@ -114,6 +114,9 @@ dll.pop() # Pop node C
 
 dll.remove(b)
 # DLL: A
+
+#dll.insert_after(dll.head, "x")
+#dll.insert_before(dll.head, "y")
 
 
 
